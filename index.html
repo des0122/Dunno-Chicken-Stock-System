@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>鸡道点货</title>
+  <link rel="icon" type="image/png" href="apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="鸡道点货">
+  <meta name="theme-color" content="#d60000">
+  <style>
+    :root {
+      --brand-red: #d60000;
+      --brand-red-dark: #a80000;
+      --brand-yellow: #ffd43b;
+      --brand-yellow-soft: #fff4bf;
+      --brand-orange: #ff922b;
+      --brand-ink: #40210f;
+      --bg: #fff8f3;
+      --card: #ffffff;
+      --line: #f1d9cc;
+      --shadow-soft: 0 6px 18px rgba(64, 33, 15, 0.08);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at top right, #fff0cc 0%, transparent 24%),
+        radial-gradient(circle at top left, #ffe5dc 0%, transparent 22%),
+        var(--bg);
+      color: var(--brand-ink);
+    }
+
+    .wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 18px;
+    }
+
+    .brand-hero {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--brand-red) 0%, #ef3b2d 100%);
+      color: #fff;
+      border-radius: 28px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 18px 36px rgba(214, 0, 0, 0.2);
+    }
+
+    .brand-hero::before,
+    .brand-hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .brand-hero::before {
+      width: 220px;
+      height: 220px;
+      right: -60px;
+      top: -90px;
+    }
+
+    .brand-hero::after {
+      width: 160px;
+      height: 160px;
+      left: -50px;
+      bottom: -80px;
+    }
+
+    .brand-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand-logo {
+      width: 72px;
+      height: 72px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.24);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(6px);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .brand-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.1;
+    }
+
+    .brand-subtitle {
+      margin-top: 6px;
+      color: rgba(255,255,255,0.88);
+      font-size: 14px;
+    }
+
+    .brand-meta {
+      margin-top: 16px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand-pill {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .brand-divider {
+      height: 10px;
+      width: 74px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--brand-yellow), var(--brand-orange), #fff);
+      margin: 10px 0 0;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 16px;
+      border: 1px solid #ffe3d5;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .section-kicker {
+      display: inline-block;
+      margin-bottom: 8px;
+      background: var(--brand-yellow-soft);
+      color: #9a5b00;
+      border: 1px solid #ffe08a;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .card-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    h1, h2 {
+      margin: 0;
+    }
+
+    h2 {
+      font-size: 22px;
+    }
+
+    .sub {
+      color: #8a6a55;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .item {
+      border: 1px solid #ffe0d3;
+      border-radius: 20px;
+      padding: 14px;
+      margin-bottom: 10px;
+      background: linear-gradient(180deg, #fffefa 0%, #fff6ee 100%);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .name {
+      font-weight: 800;
+      font-size: 17px;
+      color: var(--brand-ink);
+    }
+
+    .meta {
+      font-size: 13px;
+      color: #8a6a55;
+      margin-top: 5px;
+      font-weight: 700;
+    }
+
+    .pill {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .low {
+      color: #b42318;
+      background: #ffe2dd;
+      border: 1px solid #ffc1b8;
+    }
+
+    .ok {
+      color: #067647;
+      background: #dcfce7;
+      border: 1px solid #86efac;
+    }
+
+    input {
+      width: 110px;
+      padding: 11px 12px;
+      border: 1px solid #ffd8cb;
+      border-radius: 14px;
+      font-size: 15px;
+      background: #fffdfb;
+      color: var(--brand-ink);
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--brand-orange);
+      box-shadow: 0 0 0 4px rgba(255, 146, 43, 0.12);
+    }
+
+    button {
+      border: none;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .primary {
+      background: linear-gradient(180deg, var(--brand-red) 0%, var(--brand-red-dark) 100%);
+      color: #fff;
+      width: 100%;
+      box-shadow: 0 12px 20px rgba(214, 0, 0, 0.18);
+    }
+
+    .secondary {
+      background: #fff5ee;
+      color: var(--brand-red);
+      border: 1px solid #ffd8c9;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .secondary:hover {
+      background: #ffece1;
+    }
+
+    .hint {
+      color: #8a6a55;
+      font-size: 13px;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+
+    .status {
+      font-size: 13px;
+      margin-top: 12px;
+      font-weight: 800;
+    }
+
+    .summary-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .summary-box {
+      background: linear-gradient(180deg, #fffefb 0%, #fff7f1 100%);
+      border: 1px solid #ffe2d4;
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: 0 8px 18px rgba(64, 33, 15, 0.05);
+    }
+
+    .summary-label {
+      font-size: 13px;
+      color: #9b6a46;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .summary-value {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--brand-ink);
+    }
+
+    @media (max-width: 640px) {
+      .wrap { padding: 14px; }
+      .brand-title { font-size: 24px; }
+      .brand-logo { width: 62px; height: 62px; border-radius: 18px; }
+      .summary-row { grid-template-columns: 1fr; }
+      .row { align-items: flex-start; flex-direction: column; }
+      input { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand-hero">
+      <div class="brand-top">
+        <div class="brand-logo">
+          <img src="apple-touch-icon.png" alt="鸡道 Logo">
+        </div>
+        <div>
+          <h1 class="brand-title">鸡道点货</h1>
+          <div class="brand-subtitle">库存一眼看清 · 补货更快更稳</div>
+          <div class="brand-divider"></div>
+        </div>
+      </div>
+      <div class="brand-meta">
+        <div class="brand-pill">📦 读 Google Sheet</div>
+        <div class="brand-pill">✍️ 直接改库存</div>
+        <div class="brand-pill">🚨 低库存提醒</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="section-kicker">系统设定</span>
+      <div class="card-title-row">
+        <h2>Apps Script 连线</h2>
+      </div>
+      <div class="sub">先填入 Google Apps Script Web App URL，就能从 Google Sheet 读取和更新库存。</div>
+      <input id="scriptUrl" type="text" placeholder="贴上你的 Apps Script Web App URL" style="width:100%; margin-bottom:10px;" />
+      <button class="secondary" onclick="saveScriptUrl()">储存 URL</button>
+      <div class="hint">第一次设定好后，这台手机会记住，不用每次重贴。</div>
+    </div>
+
+    <div class="card">
+      <span class="section-kicker">库存总览</span>
+      <div class="card-title-row">
+        <h2>今日点货</h2>
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-box">
+          <div class="summary-label">总项目</div>
+          <div class="summary-value" id="totalItems">0</div>
+        </div>
+        <div class="summary-box">
+          <div class="summary-label">要补货</div>
+          <div class="summary-value" id="lowItems">0</div>
+        </div>
+        <div class="summary-box">
+          <div class="summary-label">库存正常</div>
+          <div class="summary-value" id="okItems">0</div>
+        </div>
+      </div>
+
+      <div id="stockList"></div>
+      <button class="primary" onclick="submitStock()">更新库存到 Google Sheet</button>
+      <div id="status" class="status"></div>
+    </div>
+  </div>
+
+  <script>
+    let stockData = [];
+
+    function defaultItems() {
+      return [
+        { name: 'Fries', unit: 'pack', safety: 3, current: 0 },
+        { name: 'Chicken', unit: 'pack', safety: 3, current: 0 },
+        { name: 'Potato Flour', unit: 'pack', safety: 2, current: 0 },
+        { name: 'Flour', unit: 'pack', safety: 2, current: 0 },
+        { name: 'Oil', unit: 'bottle', safety: 2, current: 0 },
+        { name: 'Spicy Powder', unit: 'pack', safety: 2, current: 0 },
+        { name: 'Seaweed Powder', unit: 'pack', safety: 2, current: 0 },
+        { name: 'Chicken Stock', unit: 'pack', safety: 1, current: 0 },
+        { name: 'Pepper', unit: 'pack', safety: 1, current: 0 },
+        { name: 'Paper Bag', unit: 'pack', safety: 2, current: 0 },
+        { name: 'Plastic Bag', unit: 'pack', safety: 2, current: 0 },
+        { name: 'Tissue', unit: 'pack', safety: 1, current: 0 },
+        { name: 'Wet Tissue', unit: 'pack', safety: 1, current: 0 }
+      ];
+    }
+
+    function saveScriptUrl() {
+      localStorage.setItem('stockScriptUrl', document.getElementById('scriptUrl').value.trim());
+      setStatus('Apps Script URL 已储存');
+    }
+
+    function loadScriptUrl() {
+      document.getElementById('scriptUrl').value = localStorage.getItem('stockScriptUrl') || '';
+    }
+
+    function setStatus(message, isError = false) {
+      const el = document.getElementById('status');
+      el.textContent = message;
+      el.style.color = isError ? '#b42318' : '#067647';
+    }
+
+    function updateSummary() {
+      const total = stockData.length;
+      const low = stockData.filter(item => Number(item.current) <= Number(item.safety)).length;
+      const ok = total - low;
+
+      document.getElementById('totalItems').textContent = total;
+      document.getElementById('lowItems').textContent = low;
+      document.getElementById('okItems').textContent = ok;
+    }
+
+    function renderList() {
+      const list = document.getElementById('stockList');
+      list.innerHTML = stockData.map((item, index) => {
+        const low = Number(item.current) <= Number(item.safety);
+        return `
+          <div class="item">
+            <div class="row">
+              <div>
+                <div class="name">${item.name}</div>
+                <div class="meta">单位: ${item.unit} · 安全库存: ${item.safety}</div>
+                <div class="pill ${low ? 'low' : 'ok'}">${low ? '要补货' : '库存正常'}</div>
+              </div>
+              <input type="number" step="0.01" value="${item.current}" onchange="updateCurrent(${index}, this.value)" />
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      updateSummary();
+    }
+
+    function updateCurrent(index, value) {
+      stockData[index].current = Number(value) || 0;
+      renderList();
+    }
+
+    async function loadStock() {
+      const url = document.getElementById('scriptUrl').value.trim();
+      if (!url) {
+        stockData = defaultItems();
+        renderList();
+        return;
+      }
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        stockData = Array.isArray(data) && data.length ? data : defaultItems();
+        renderList();
+        setStatus('已从 Google Sheet 读取库存');
+      } catch (err) {
+        stockData = defaultItems();
+        renderList();
+        setStatus('读取失败，先显示默认资料', true);
+      }
+    }
+
+    async function submitStock() {
+      const url = document.getElementById('scriptUrl').value.trim();
+      if (!url) {
+        setStatus('请先贴上 Apps Script URL', true);
+        return;
+      }
+
+      try {
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ items: stockData })
+        });
+        const data = await res.json();
+        if (data.success) {
+          setStatus('库存已更新到 Google Sheet');
+        } else {
+          setStatus('更新失败', true);
+        }
+      } catch (err) {
+        setStatus('提交失败，请检查 Apps Script URL', true);
+      }
+    }
+
+    loadScriptUrl();
+    loadStock();
+  </script>
+</body>
+</html>
